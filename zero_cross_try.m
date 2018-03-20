@@ -13,28 +13,32 @@ overlap = 0.5; % Ratio of overlap and window length
 window_gen = str2func( opt.windowType );
 % for studnum=1:16
    
-for studnum=18:18
+for times=1:5
  clf;clear sig rms_mag ROR figure(1) z1
+ % {  
+    [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\endpoint detection all/t02W0',num2str(i),'-0',num2str(times),'.wav']);
  
+%}
+ %{
 if studnum>9
     opt1=1;    
 else 
     opt1=0;
 end
     studnum
-    if opt1==0 %¾Ç¥Í¼Æ¦r¬O1~9
+    if opt1==0 %å­¸ç”Ÿæ•¸å­—æ˜¯1~9
         if i<10
-            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\§J §Ü¾ÔÅK¸ô\105-2\paper ¹êÅç AHG\414 ¦P¾Ç\handoff_0314-20170331T082045Z-001\handoff_0314\S0',num2str(studnum),'/S0',num2str(studnum),'W0',num2str(i),'-05.wav']);
+            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\å…‹ æŠ—æˆ°éµè·¯\105-2\paper å¯¦é©— AHG\414 åŒå­¸\handoff_0314-20170331T082045Z-001\handoff_0314\S0',num2str(studnum),'/S0',num2str(studnum),'W0',num2str(i),'-05.wav']);
         else
-            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\§J §Ü¾ÔÅK¸ô\105-2\paper ¹êÅç AHG\414 ¦P¾Ç\handoff_0314-20170331T082045Z-001\handoff_0314\S0',num2str(studnum),'/S0',num2str(studnum),'W',num2str(i),'-05.wav']);
+            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\å…‹ æŠ—æˆ°éµè·¯\105-2\paper å¯¦é©— AHG\414 åŒå­¸\handoff_0314-20170331T082045Z-001\handoff_0314\S0',num2str(studnum),'/S0',num2str(studnum),'W',num2str(i),'-05.wav']);
 
         end
         
     else
         if i<10
-            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\§J §Ü¾ÔÅK¸ô\105-2\paper ¹êÅç AHG\414 ¦P¾Ç\handoff_0314-20170331T082045Z-001\handoff_0314\S',num2str(studnum),'/S',num2str(studnum),'W0',num2str(i),'-05.wav']);
+            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\å…‹ æŠ—æˆ°éµè·¯\105-2\paper å¯¦é©— AHG\414 åŒå­¸\handoff_0314-20170331T082045Z-001\handoff_0314\S',num2str(studnum),'/S',num2str(studnum),'W0',num2str(i),'-05.wav']);
         else
-            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\§J §Ü¾ÔÅK¸ô\105-2\paper ¹êÅç AHG\414 ¦P¾Ç\handoff_0314-20170331T082045Z-001\handoff_0314\S',num2str(studnum),'/S',num2str(studnum),'W',num2str(i),'-05.wav']);
+            [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\å…‹ æŠ—æˆ°éµè·¯\105-2\paper å¯¦é©— AHG\414 åŒå­¸\handoff_0314-20170331T082045Z-001\handoff_0314\S',num2str(studnum),'/S',num2str(studnum),'W',num2str(i),'-05.wav']);
 
         end
         
@@ -45,7 +49,7 @@ end
 %}
 %% student
 % y1(:,2)=[];
-y2(:,2)=[];
+% y2(:,2)=[];
 soundsc(y2,sr)
 x=y2;
 emphasis = 0
@@ -63,7 +67,7 @@ noverlap = round(length(window)*overlap);
 nfft = power(2, ceil( log2(length(window)) ));
 % [S,F,T] =spectrogram( x, window, noverlap, nfft, sr);
 %spectrogram( y1, window, noverlap, nfft, sr);
- frame_length = length(window); %%¡@"M"
+ frame_length = length(window); %%ã€€"M"
     frame_shift = frame_length - noverlap;
 nframe = ceil( ( length(x) - frame_length ) / frame_shift );
 % numFrames = floor((length(x)-frame_length)/frame_shift)+1;
@@ -103,7 +107,7 @@ z2=ZCR(x);
  plot(z1)
 ylabel('ZCR')
 
-saveas(figure(1) , ['C:\Users\jenny\Desktop\§J §Ü¾ÔÅK¸ô\106-2\paper ¹êÅç AHG\0306\cat',num2str(studnum),'_5'] , 'bmp' )
+saveas(figure(1) , ['C:\Users\jenny\Desktop\å…‹ æŠ—æˆ°éµè·¯\106-2\paper å¯¦é©— AHG\0321\t3_cat03_',num2str(times)] , 'bmp' )
 pause
 end
 
