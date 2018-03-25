@@ -1,0 +1,22 @@
+%%  fopen+ fprintf 寫檔
+%{
+fileID = fopen('C:\Users\jenny\Desktop\endpoint detection all\epd\ptest9','wt')
+for i = 2:3
+a1='Read from file: "C:\Users\jenny\Desktop\endpoint detection all\S03W03-0';
+a11=i;
+a12='.wav"';
+a2='View & Edit';
+a3=['editor:"Sound S03W03-0',num2str(i),'"'];
+a4='Select: 0, 1';
+a5='Formant listing';
+a51='Close'
+a6='endeditor';
+a7='writeFile: "epd';
+a71=i;
+a72='.txt", info$() ';
+fprintf(fileID,'%s%d%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s%d%s\n',a1,a11,a12,a2,a3,a4,a5,a51,a6,a7,a71,a72);
+% fprintf(fileID,'%s\n',b);
+
+end
+fclose(fileID);
+%}
