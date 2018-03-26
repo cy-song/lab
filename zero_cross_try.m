@@ -1,22 +1,24 @@
 clc; clear;close all
 
 i=3;
+tea = 1; %teacher num
 %% teacher picture
 %
 opt.windowType = 'hann'; % rectwin, hann, or hamming etc.
 
 window_length = 0.02; % Second
 overlap = 0.5; % Ratio of overlap and window length
-
+threshold1 = 70000; %ROR
+threshold2 = 0.1; %zcr
 
 %%
 window_gen = str2func( opt.windowType );
 % for studnum=1:16
    
 for times=1:5
- clf;clear sig rms_mag ROR figure(1) z1
+ clf;clear sig rms_mag ROR figure(1) z1 x 
  % {  
-    [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\endpoint detection all/t02W0',num2str(i),'-0',num2str(times),'.wav']);
+    [y2,sr] =audioread([ 'C:\Users\jenny\Desktop\endpoint detection all/t0',num2str(tea),'W0',num2str(i),'-0',num2str(times),'.wav']);
  
 %}
  %{
@@ -66,6 +68,8 @@ window = window_gen( round(window_length*sr) );
 noverlap = round(length(window)*overlap);
 nfft = power(2, ceil( log2(length(window)) ));
 % [S,F,T] =spectrogram( x, window, noverlap, nfft, sr);
+% [S,F,T] =spectrogram( x, window, noverlap, [], sr,'yaxis');
+
 %spectrogram( y1, window, noverlap, nfft, sr);
  frame_length = length(window); %%　"M"
     frame_shift = frame_length - noverlap;
@@ -96,8 +100,19 @@ for i2=2:nframe
 ROR(i2) = (rms_mag(i2)-rms_mag(i2-1))/ delta_t;
 end
 subplot(4,1,3)
- plot(ROR)
+[pks,locs] = findpeaks(ROR);
+[pks2,locs2]= findpeaks(ROR,'MinPeakHeight',threshold1)
+
+if length(locs2) >2
+    
+end
+
+
+% findpeaks(ROR,'MinPeakHeight',threshold1);
+ plot(ROR) ;hold on; scatter(locs2,pks2) 
  ylabel('ROR')
+ text(locs2+.02,pks2,num2str((1:numel(pks2))'))
+
 %%%%%%%%%%%%%%%%%%%% 
 for i3= 1:nframe
 z1(i3)=ZCR(x([(1+( frame_length - noverlap)*(i3-1)):(frame_length+( frame_length - noverlap)*(i3-1))]));
@@ -107,7 +122,7 @@ z2=ZCR(x);
  plot(z1)
 ylabel('ZCR')
 
-saveas(figure(1) , ['C:\Users\jenny\Desktop\克 抗戰鐵路\106-2\paper 實驗 AHG\0321\t3_cat03_',num2str(times)] , 'bmp' )
+saveas(figure(1) , ['C:\Users\jenny\Desktop\克 抗戰鐵路\106-2\paper 實驗 AHG\0321\t',num2str(tea),'_cat03_',num2str(times)] , 'bmp' )
 pause
 end
 
